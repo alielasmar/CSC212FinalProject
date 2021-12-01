@@ -163,3 +163,22 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	}
 	return newMatrix;
 }
+Matrix Matrix mutiplication(Matrix& matrix2){
+	Matrix newMatrix;
+	newMatrix.set_num_rows(this->num_rows);
+	newMatrix.set_num_cols(this->num_cols);
+	Node* curr1 = this->head;
+	Node* curr2 = matrix2.get_head();
+	if (this->num_cols != matrix2.get_num_rows()){
+		std:cout << "error: matrices cannot be multiplication due to basic matrix multiplication rule"
+	}else{
+		num_cols = matrix2.get_num_cols;
+
+	}
+	Matrix determent(Matrix&){
+	Matrix newMatrix;
+	newMatrix.set_num_rows(this->num_rows);
+	newMatrix.set_num_cols(this->num_cols);
+	Node* curr1 = this->head;
+	Node* curr2 = matrix2.get_head();
+	};
