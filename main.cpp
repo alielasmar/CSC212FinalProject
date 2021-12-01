@@ -15,6 +15,7 @@ void read_file(Matrix* matrix, std::string filename) {
 		std::istringstream ss(line);
 		while (ss >> data) {
 			if (data != 0) {
+				// only pushes data into the linked list if it != 0
 				matrix->push_back(row, col, data);
 			}
 			col++;

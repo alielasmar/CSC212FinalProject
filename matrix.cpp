@@ -54,12 +54,12 @@ bool Node::pos_bigger(Node* node2) {
 
 
 Matrix::Matrix() {
-	head = nullptr;
+	head = nullptr; // initialize both to nullptr
 	tail = nullptr;
 }
 
 Matrix::~Matrix() {
-	Node* current = head;
+	Node* current = head; // destructor for the linked list
 	Node* next;
 	while (current != nullptr) {
 		next = current->next;
@@ -99,17 +99,21 @@ int Matrix::get_num_cols() {
 	return num_cols;
 }
 
-// writes a matrix to a file
 void Matrix::write_to_file(std::string filename) {
 	std::ofstream output(filename);
 	Node* curr = this->head;
+	// The nested for loops loop though every coordinate in the matrix
 	for (int i = 0; i < this->num_rows; i++) {
 		for (int j = 0; j < this->num_cols; j++) {
+			// if statement makes sure the current linked list index is not null
+			// also checks row and col of current index to see if it matches i and j
 			if (curr != nullptr && i == curr->row && j == curr->col) {
+				// if it matches, output the data value at location (i,j)
 				output << curr->data << " ";
 				curr = curr->next;
 			}
 			else {
+				// otherwise, output 0 for (i,j) since it is sparse
 				output << 0 << " ";
 			}
 		}
@@ -125,6 +129,7 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	Node* curr1 = this->head;
 	Node* curr2 = matrix2->get_head();
 
+	// I will try to explain this algorithm on paper since it is difficult to explain here
 	if (this->num_rows == matrix2->get_num_rows() && this->num_cols == matrix2->get_num_cols()) {
 		while (curr1 != nullptr && curr2 != nullptr) {			
 			if (curr1 != nullptr && curr1->pos_bigger(curr2)) {
@@ -147,6 +152,8 @@ Matrix* Matrix::add(Matrix* matrix2) {
 			curr2 = curr2->get_next();
 		}
 
+		// The algorithm below iterates through the linked list to add duplicate values together.
+		// For example, if two nodes have the same row/col values, their data is added together and the duplicate is deleted.
 		Node* currNew = newMatrix->get_head();
 		while (currNew != nullptr && currNew->get_next() != nullptr) {
 			if (currNew->get_row() == currNew->get_next()->get_row() && currNew->get_col() == currNew->get_next()->get_col()) {
@@ -163,22 +170,3 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	}
 	return newMatrix;
 }
-Matrix Matrix mutiplication(Matrix& matrix2){
-	Matrix* newMatrix = new Matrix();
-	newMatrix->set_num_rows(this->num_rows);
-	newMatrix->set_num_cols(this->num_cols);
-	Node* curr1 = this->head;
-	Node* curr2 = matrix2->get_head();
-	if (this->num_cols != matrix2.get_num_rows()){
-		std:cout << "error: matrices cannot be multiplication due to basic matrix multiplication rule"
-	}else{
-		num_cols = matrix2.get_num_cols;
-
-	}
-	Matrix determent(Matrix&){
-	Matrix* newMatrix = new Matrix();
-	newMatrix->set_num_rows(this->num_rows);
-	newMatrix->set_num_cols(this->num_cols);
-	Node* curr1 = this->head;
-	Node* curr2 = matrix2->get_head();
-	};
