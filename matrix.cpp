@@ -175,7 +175,7 @@ Matrix Matrix mutiplication(Matrix& matrix2){
 		num_cols = matrix2.get_num_cols;
 
 	}
-	Matrix determent(Matrix&){
+Matrix determent(Matrix&){
 	Matrix* newMatrix = new Matrix();
 	newMatrix->set_num_rows(this->num_rows);
 	newMatrix->set_num_cols(this->num_cols);
