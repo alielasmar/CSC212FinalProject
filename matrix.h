@@ -46,6 +46,8 @@ public:
 	void set_num_cols(int num);
 	int get_num_cols();
 	Matrix* add(Matrix* matrix2);
+	Matrix* mutiplication(Matrix& matrix2);
+	Matrix* determent(Matrix&);
 };
 
 #endif
