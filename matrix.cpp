@@ -99,6 +99,29 @@ int Matrix::get_num_cols() {
 	return num_cols;
 }
 
+int Matrix::get_exacl_data(int inrow, int incol， matrix1){
+	int maxrow = 0;
+	int maxcol = 0;
+	while(curr1 != nullptr){
+		if(curr1->get_col()== incol()&& curr1->get_row()== inrow){
+			return curr->get_data();
+		}
+		if(curr1->get_row()>maxrow){
+			maxrow = curr1->get_row();
+		}
+		if(curr1->get_col()>maxcol){
+			maxrow = curr1->get_col();
+		}
+		curr1 = curr1->next
+	}
+	if(maxrow>inrow && maxcol>incol){
+		return 0;
+	}else{
+		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace"
+		return 0;
+	}
+}
+
 // writes a matrix to a file
 void Matrix::write_to_file(std::string filename) {
 	std::ofstream output(filename);
@@ -163,22 +186,3 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	}
 	return newMatrix;
 }
-Matrix Matrix mutiplication(Matrix& matrix2){
-	Matrix* newMatrix = new Matrix();
-	newMatrix->set_num_rows(this->num_rows);
-	newMatrix->set_num_cols(this->num_cols);
-	Node* curr1 = this->head;
-	Node* curr2 = matrix2->get_head();
-	if (this->num_cols != matrix2.get_num_rows()){
-		std:cout << "error: matrices cannot be multiplication due to basic matrix multiplication rule"
-	}else{
-		num_cols = matrix2.get_num_cols;
-
-	}
-Matrix determent(Matrix&){
-	Matrix* newMatrix = new Matrix();
-	newMatrix->set_num_rows(this->num_rows);
-	newMatrix->set_num_cols(this->num_cols);
-	Node* curr1 = this->head;
-	Node* curr2 = matrix2->get_head();
-	};

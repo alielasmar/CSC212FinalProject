@@ -55,6 +55,7 @@ public:
 	void set_num_cols(int num);					// sets the number of columns (used when reading into matrix)
 	int get_num_cols();							// returns number of columns
 	Matrix* add(Matrix* matrix2);				// adds two matrices
+	int Matrix::get_exacl_data(int inrow, int incol， matrix1)                 // get exact data with given row and col
 };
 
 #endif
