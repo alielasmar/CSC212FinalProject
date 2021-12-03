@@ -4,6 +4,10 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <array>
+#include <sstream>
+#include <cmath>
 
 class Node {
 	/*
@@ -54,8 +58,12 @@ public:
 	int get_num_rows();							// returns the number of rows
 	void set_num_cols(int num);					// sets the number of columns (used when reading into matrix)
 	int get_num_cols();							// returns number of columns
+	int get_max_col(Matrix1);             // get the maximum col number
+	int get_max_row(Matrix1);             // get the maximum row number
+	void Transform_to_vector(Matrix1, std::vector<std::vector<double>> *Vector)            // transform linked-list to a 2D vector
+	int Matrix get_exacl_data(int inrow, int incol， matrix1)                 // get exact data with given row and col
 	Matrix* add(Matrix* matrix2);				// adds two matrices
-	int Matrix::get_exacl_data(int inrow, int incol， matrix1)                 // get exact data with given row and col
+	Matrix* Multiply(Matrix* matrix2);          // Multiply
 };
 
 #endif
