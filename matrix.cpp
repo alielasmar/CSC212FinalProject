@@ -99,26 +99,60 @@ int Matrix::get_num_cols() {
 	return num_cols;
 }
 
-int Matrix::get_exacl_data(int inrow, int incol， matrix1){
+int Matrix::get_max_col(){
+	int maxcol = 0;
+	while(curr != nullptr){
+		if(curr->get_col()>maxcol){
+			maxrow = curr->get_col();
+		}
+		curr1 = curr->next
+	}
+	return maxcol;
+}
+
+int Matrix::get_max_row(){
+	int maxcol = 0;
+	while(curr != nullptr){
+		if(curr->get_col()>maxrow){
+			maxrow = curr->get_row();
+		}
+		curr = curr1->next
+	}
+	return maxrow;
+}
+
+int Matrix::get_exacl_data(int inrow, int incol){
 	int maxrow = 0;
 	int maxcol = 0;
-	while(curr1 != nullptr){
-		if(curr1->get_col()== incol()&& curr1->get_row()== inrow){
+	while(curr != nullptr){
+		if(curr->get_col()== incol()&& curr->get_row()== inrow){
 			return curr->get_data();
 		}
 		if(curr1->get_row()>maxrow){
-			maxrow = curr1->get_row();
+			maxrow = curr->get_row();
 		}
 		if(curr1->get_col()>maxcol){
-			maxrow = curr1->get_col();
+			maxrow = curr->get_col();
 		}
-		curr1 = curr1->next
+		curr1 = curr->next
 	}
 	if(maxrow>inrow && maxcol>incol){
 		return 0;
 	}else{
 		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace"
 		return 0;
+	}
+}
+
+void Matrix::transform_to_vector(Matrix1, std::vector<std::vector<double>> * 2d_vec){
+	int row = Matrix1->get_max_row(); // get maxrow for the matrix
+	int col = Matrix1->get_max_col(); // get maxcol for the matrix
+	std::vector<double> new_row;
+	for(int i = 0; i < row; i++){
+		for(int k =0; k< col; k++){
+			new_row.push_back(Matrix1->get_exacl_data(i,k));
+		}
+		2d_vec->push_back(new_row);
 	}
 }
 
@@ -185,4 +219,11 @@ Matrix* Matrix::add(Matrix* matrix2) {
 		std::cout << "error: matrices are not the same size";
 	}
 	return newMatrix;
+}
+Matrix* Matrix::Multiply(Matrix* matrix2){
+	//find the max row and col for both matrix, compare both of them, make sure first matrix col = second matrix row, if not error.
+	//First matrix row will be the new matrix row, second matrix col will be the new col;
+	//set a two for loop, i go through form 0 to maxrow for the first matrix and inside loop, k form 0 to maxcol of the second matrix.
+	//one more loop inside use x form 0 to first matrix col or second matrix row, use excal number form first matrix(i,x) times second matrix (i,k), at the end add all of them together
+	//and then save it on new matrix position i and k.
 }
