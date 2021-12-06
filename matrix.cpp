@@ -157,6 +157,7 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
 			new_row.push_back(this->get_exacl_data(i,k));
 		}
 		twod_vec->push_back(new_row);
+		new_row.clear();
 	}
 }
 
@@ -231,3 +232,4 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	//one more loop inside use x form 0 to first matrix col or second matrix row, use excal number form first matrix(i,x) times second matrix (i,k), at the end add all of them together
 	//and then save it on new matrix position i and k.
 //}
+
