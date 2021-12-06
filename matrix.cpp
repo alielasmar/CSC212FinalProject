@@ -128,21 +128,22 @@ int Matrix::get_exacl_data(int inrow, int incol){
 	int maxcol = 0;
 	Node* curr = this->head;
 	while(curr != nullptr){
-		if(curr-> get_col()== incol && curr-> get_row()== inrow){
+		if(curr-> get_col() == incol && curr-> get_row()== inrow){
+			//std::cout<<curr->get_data()<<std::endl;
 			return curr->get_data();
 		}
-		if(curr->get_row() > maxrow){
+		if(curr->get_row() >= maxrow){
 			maxrow = curr->get_row();
 		}
-		if(curr->get_col() > maxcol){
-			maxrow = curr->get_col();
+		if(curr->get_col() >= maxcol){
+			maxcol = curr->get_col();
 		}
 		curr = curr->next;
 	}
-	if(maxrow > inrow && maxcol > incol){
+	if(maxrow >= inrow && maxcol >= incol){
 		return 0;
 	}else{
-		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace";
+		std::cout<<"error, in " << inrow << "row and " << incol<<std::endl;
 		return 0;
 	}
 }
@@ -151,8 +152,8 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
 	int row = this->get_max_row(); // get maxrow for the matrix
 	int col = this->get_max_col(); // get maxcol for the matrix
 	std::vector<double> new_row;
-	for(int i = 0; i < row; i++){
-		for(int k =0; k< col; k++){
+	for(int i = 0; i <= row; i++){
+		for(int k =0; k<= col; k++){
 			new_row.push_back(this->get_exacl_data(i,k));
 		}
 		twod_vec->push_back(new_row);
