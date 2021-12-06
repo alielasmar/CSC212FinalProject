@@ -15,7 +15,7 @@ Node::Node(int row, int col, int data) {
 }
 
 Node::~Node() {
-	
+
 }
 
 int Node::get_row() {
@@ -101,22 +101,24 @@ int Matrix::get_num_cols() {
 
 int Matrix::get_max_col(){
 	int maxcol = 0;
+	Node* curr = this->head;
 	while(curr != nullptr){
 		if(curr->get_col()>maxcol){
-			maxrow = curr->get_col();
+			maxcol = curr->get_col();
 		}
-		curr1 = curr->next
+		curr = curr->next;
 	}
 	return maxcol;
 }
 
 int Matrix::get_max_row(){
-	int maxcol = 0;
+	int maxrow = 0;
+	Node* curr = this->head;
 	while(curr != nullptr){
-		if(curr->get_col()>maxrow){
+		if(curr->get_row()>maxrow){
 			maxrow = curr->get_row();
 		}
-		curr = curr1->next
+		curr = curr->next;
 	}
 	return maxrow;
 }
@@ -124,35 +126,36 @@ int Matrix::get_max_row(){
 int Matrix::get_exacl_data(int inrow, int incol){
 	int maxrow = 0;
 	int maxcol = 0;
+	Node* curr = this->head;
 	while(curr != nullptr){
-		if(curr->get_col()== incol()&& curr->get_row()== inrow){
+		if(curr-> get_col()== incol && curr-> get_row()== inrow){
 			return curr->get_data();
 		}
-		if(curr1->get_row()>maxrow){
+		if(curr->get_row() > maxrow){
 			maxrow = curr->get_row();
 		}
-		if(curr1->get_col()>maxcol){
+		if(curr->get_col() > maxcol){
 			maxrow = curr->get_col();
 		}
-		curr1 = curr->next
+		curr = curr->next;
 	}
-	if(maxrow>inrow && maxcol>incol){
+	if(maxrow > inrow && maxcol > incol){
 		return 0;
 	}else{
-		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace"
+		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace";
 		return 0;
 	}
 }
 
-void Matrix::transform_to_vector(Matrix1, std::vector<std::vector<double>> * 2d_vec){
-	int row = Matrix1->get_max_row(); // get maxrow for the matrix
-	int col = Matrix1->get_max_col(); // get maxcol for the matrix
+void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
+	int row = this->get_max_row(); // get maxrow for the matrix
+	int col = this->get_max_col(); // get maxcol for the matrix
 	std::vector<double> new_row;
 	for(int i = 0; i < row; i++){
 		for(int k =0; k< col; k++){
-			new_row.push_back(Matrix1->get_exacl_data(i,k));
+			new_row.push_back(this->get_exacl_data(i,k));
 		}
-		2d_vec->push_back(new_row);
+		twod_vec->push_back(new_row);
 	}
 }
 
@@ -183,7 +186,7 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	Node* curr2 = matrix2->get_head();
 
 	if (this->num_rows == matrix2->get_num_rows() && this->num_cols == matrix2->get_num_cols()) {
-		while (curr1 != nullptr && curr2 != nullptr) {			
+		while (curr1 != nullptr && curr2 != nullptr) {
 			if (curr1 != nullptr && curr1->pos_bigger(curr2)) {
 				newMatrix->push_back(curr2->get_row(), curr2->get_col(), curr2->get_data());
 				curr2 = curr2->get_next();
@@ -220,10 +223,10 @@ Matrix* Matrix::add(Matrix* matrix2) {
 	}
 	return newMatrix;
 }
-Matrix* Matrix::Multiply(Matrix* matrix2){
+//Matrix* Matrix::Multiply(Matrix* matrix2){
 	//find the max row and col for both matrix, compare both of them, make sure first matrix col = second matrix row, if not error.
 	//First matrix row will be the new matrix row, second matrix col will be the new col;
 	//set a two for loop, i go through form 0 to maxrow for the first matrix and inside loop, k form 0 to maxcol of the second matrix.
 	//one more loop inside use x form 0 to first matrix col or second matrix row, use excal number form first matrix(i,x) times second matrix (i,k), at the end add all of them together
 	//and then save it on new matrix position i and k.
-}
+//}
