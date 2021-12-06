@@ -1,6 +1,14 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <iostream>
+#include <cmath>
+#include <cstring>
+#include <limits>
+#include <fstream>
+#include <vector>
+#include <array>
+#include <sstream>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -18,7 +26,7 @@ class Node {
 	int row;
 	int col;
 	int data;
-	Node* next;	
+	Node* next;
 
 	friend class Matrix;
 
@@ -39,7 +47,7 @@ public:
 
 class Matrix {
 	/*
-	The Matrix class is the linked list itself. It holds information for the number of rows 
+	The Matrix class is the linked list itself. It holds information for the number of rows
 	and columns in the matrix itself as well as the head and tail of the linked list.
 	*/
 	Node* head;
@@ -58,12 +66,12 @@ public:
 	int get_num_rows();							// returns the number of rows
 	void set_num_cols(int num);					// sets the number of columns (used when reading into matrix)
 	int get_num_cols();							// returns number of columns
-	int get_max_col(Matrix1);             // get the maximum col number
-	int get_max_row(Matrix1);             // get the maximum row number
-	void Transform_to_vector(Matrix1, std::vector<std::vector<double>> *Vector)            // transform linked-list to a 2D vector
-	int Matrix get_exacl_data(int inrow, int incol， matrix1)                 // get exact data with given row and col
+	int get_max_col();             // get the maximum col number
+	int get_max_row();             // get the maximum row number
+	void Transform_to_vector(std::vector<std::vector<double>>* twod_vec);            // transform linked-list to a 2D vector
+	int get_exacl_data(int inrow, int incol);                 // get exact data with given row and col
 	Matrix* add(Matrix* matrix2);				// adds two matrices
-	Matrix* Multiply(Matrix* matrix2);          // Multiply
+	//Matrix* Multiply(Matrix* matrix2);          // Multiply
 };
 
 #endif
