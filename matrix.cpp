@@ -128,37 +128,78 @@ int Matrix::get_exacl_data(int inrow, int incol){
 	int maxcol = 0;
 	Node* curr = this->head;
 	while(curr != nullptr){
-		if(curr-> get_col() == incol && curr-> get_row()== inrow){
-			//std::cout<<curr->get_data()<<std::endl;
+		if(curr-> get_col()== incol && curr-> get_row()== inrow){
 			return curr->get_data();
 		}
-		if(curr->get_row() >= maxrow){
+		if(curr->get_row() > maxrow){
 			maxrow = curr->get_row();
 		}
-		if(curr->get_col() >= maxcol){
-			maxcol = curr->get_col();
+		if(curr->get_col() > maxcol){
+			maxrow = curr->get_col();
 		}
 		curr = curr->next;
 	}
-	if(maxrow >= inrow && maxcol >= incol){
+	if(maxrow > inrow && maxcol > incol){
 		return 0;
 	}else{
-		std::cout<<"error, in " << inrow << "row and " << incol<<std::endl;
+		std::cout<<"error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace";
 		return 0;
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
+void Matrix::Transform_to_vector(std::vector<std::vector<int>> * twod_vec){
 	int row = this->get_max_row(); // get maxrow for the matrix
 	int col = this->get_max_col(); // get maxcol for the matrix
-	std::vector<double> new_row;
-	for(int i = 0; i <= row; i++){
-		for(int k =0; k<= col; k++){
+	std::vector<int> new_row;
+	for(int i = 0; i < row; i++){
+		for(int k =0; k< col; k++){
 			new_row.push_back(this->get_exacl_data(i,k));
 		}
 		twod_vec->push_back(new_row);
-		new_row.clear();
 	}
+}
+
+
+//since the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer
+int CalcDet(vector<vector<int>> Matrix) {
+    //this function is written in c++ to calculate the determinant of matrix
+    // it's a recursive function that can handle matrix of any dimension
+    int det = 0; // the determinant value will be stored here
+    if (Matrix.size() == 1) return Matrix[0][0]; // no calculation needed
+    else if (Matrix.size() == 2) {
+        //in this case we calculate the determinant of a 2-dimensional matrix in a
+        //default procedure
+        det = (Matrix[0][0] * Matrix[1][1] - Matrix[0][1] * Matrix[1][0]);
+        return det;
+    } else {
+        //in this case we calculate the determinant of a squared matrix that have
+        // for example 3x3 order greater than 2
+        for (int p = 0; p < Matrix[0].size(); p++) {
+            //this loop iterate on each elements of the first row in the matrix.
+            //at each element we cancel the row and column it exist in
+            //and form the Cofactor from the rest of the elements in the matrix
+            vector<vector<int>> TempMatrix; // to hold the Cofactor;
+            for (int i = 1; i < Matrix.size(); i++) {
+                // iteration will start from row one cancelling the first row values
+                vector<int> TempRow;
+
+                // iteration will pass all cells of the i row excluding the j
+                //value that match p column
+                for (int j = 0; j < Matrix[i].size(); j++)
+                    if (j != p) TempRow.push_back(Matrix[i][j]);//add current cell to TempRow
+
+                if (TempRow.size() > 0) TempMatrix.push_back(TempRow);
+                //after adding each row of the new matrix to the vector tempx
+                //we add it to the vector temp which is the vector where the new
+                //matrix will be formed
+            }
+            det = det + Matrix[0][p] * pow(-1, p) * CalcDeterminant(TempMatrix);
+            //then we calculate the value of determinant by using a recursive way
+            //where we re-call the function by passing to it the Cofactor
+            //we keep doing this until we get our determinant
+        }
+        return det;
+    }
 }
 
 // writes a matrix to a file
