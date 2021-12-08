@@ -35,7 +35,7 @@ int main() {
 	read_file(matrix1, filename);
 	read_file(matrix2, "matrix2.txt");
 
-	Matrix* new_matrix = matrix1->add(matrix2);
+	Matrix* new_matrix = matrix1->subtract(matrix2);
 	Matrix* product = matrix1->multiply(matrix2);
 
 	std::vector<std::vector<double>> vec;
@@ -43,7 +43,7 @@ int main() {
 
 	std::cout << "\n" << matrix1->CalcDet(vec);
 
-	product->write_to_file("matrix_new.txt");
+	new_matrix->write_to_file("matrix_new.txt");
 
 	delete matrix1;
 	delete matrix2;

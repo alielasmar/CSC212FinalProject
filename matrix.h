@@ -46,6 +46,7 @@ class Matrix {
 	void place(int row, int col, int data, Matrix* newMatrix); // helper method which adds data into a certain index of the new matrix
 public:
 	Matrix();
+	Matrix(int num_rows, int num_cols);
 	~Matrix();
 
 	Node* get_head();							// returns the head pointer

@@ -58,6 +58,13 @@ Matrix::Matrix() {
 	tail = nullptr;
 }
 
+Matrix::Matrix(int num_rows, int num_cols) {
+	head = nullptr;
+	tail = nullptr;
+	this->num_rows = num_rows;
+	this->num_cols = num_cols;
+}
+
 Matrix::~Matrix() {
 	Node* current = head; // destructor for the linked list
 	Node* next;
@@ -174,12 +181,15 @@ Matrix* Matrix::add(Matrix* matrix2) {
 
 Matrix* Matrix::subtract(Matrix* matrix2) {
 	// Multiply all elements of matrix2 by -1 and add the two together
+	Matrix* matrixSub = new Matrix(matrix2->get_num_rows(), matrix2->get_num_cols());
 	Node* curr = matrix2->get_head();
 	while (curr != nullptr) {
-		curr->set_data(-1 * curr->get_data());
+		matrixSub->push_back(curr->get_row(), curr->get_col(), curr->get_data() * -1);
 		curr = curr->get_next();
 	}
-	return this->add(matrix2);
+	Matrix* newMatrix = this->add(matrixSub);
+	delete matrixSub;
+	return newMatrix;
 }
 
 Matrix* Matrix::multiply(Matrix* matrix2) {
