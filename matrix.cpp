@@ -264,8 +264,8 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<double>>* twod_vec) {
-	std::vector<double> new_row;
+void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
+	std::vector<int> new_row;
 	for (int i = 0; i < this->num_rows; i++) {
 		for (int k = 0; k < this->num_cols; k++) {
 			new_row.push_back(this->get_exacl_data(i, k));
@@ -275,65 +275,42 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>>* twod_vec) {
 	}
 }
 
-
-//since the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer
-double Matrix::CalcDet() {
-	std::vector<std::vector<double>> matrix;
-	this-Transform_to_vector(&matrix);
-	if (matrix.size() != matrix[0].size()) {
-		std::cout << "The matrix is not square: unable to calculate determinant";
-		return 0;
-	}
-	//this function is written in c++ to calculate the determinant of matrix
-	// it's a recursive function that can handle matrix of any dimension
-	double det = 0; // the determinant value will be stored here
-	if (matrix.size() == 1) return matrix[0][0]; // no calculation needed
-	else if (matrix.size() == 2) {
-		//in this case we calculate the determinant of a 2-dimensional matrix in a
-		//default procedure
-		det = (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
-		return det;
-	}
-	else {
-		//in this case we calculate the determinant of a squared matrix that have
-		// for example 3x3 order greater than 2
-		for (int p = 0; p < matrix[0].size(); p++) {
-			//this loop iterate on each elements of the first row in the matrix.
-			//at each element we cancel the row and column it exist in
-			//and form the Cofactor from the rest of the elements in the matrix
-			std::vector<std::vector<double>> Tempmatrix; // to hold the Cofactor;
-			for (int i = 1; i < matrix.size(); i++) {
-				// iteration will start from row one cancelling the first row values
-				std::vector<double> TempRow;
-
-				// iteration will pass all cells of the i row excluding the j
-				//value that match p column
-				for (int j = 0; j < matrix[i].size(); j++) {
-					if (j != p) TempRow.push_back(matrix[i][j]);//add current cell to TempRow
-				}	
-
-				if (TempRow.size() > 0) Tempmatrix.push_back(TempRow);
-				//after adding each row of the new matrix to the vector tempx
-				//we add it to the vector temp which is the vector where the new
-				//matrix will be formed
-			}
-			det = det + matrix[0][p] * pow(-1, p) * CalcDet(Tempmatrix);
-			//then we calculate the value of determinant by using a recursive way
-			//where we re-call the function by passing to it the Cofactor
-			//we keep doing this until we get our determinant
-		}
-		return det;
-	}
+/**Calculates determnant of a matrix of any size
+ * @Param - 2d matrix of integer values
+ * @return - integer value of determinate (the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer)
+*/
+int Matrix::CalcDet(vector<vector<int>> matrix) {
+    int det = 0; //the determinant value
+    if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
+    else if (matrix.size() == 2) {
+        det = (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]); //base case - determinant of a 2d matrix
+        return det;
+    } else { //calculate the determinant of squared matrix with order greater than 2
+        //iterate accross first row of cofactors (left to right)
+        for (int p = 0; p < matrix[0].size(); p++) {
+            vector<vector<int>> tempMatrix; // to hold the new matrix (after columns and rows are removed with respect to cofactor);
+            // iterate through rows not including cofacters (from top to bottom)
+            for (int q = 1; q < matrix.size(); q++) {
+                vector<int> tempRow; //creates row for tempMatrix
+                // iterate across rows exluding the current column of cofactor (p) (left to right)
+                for (int i = 0; i < matrix[q].size(); i++)
+                    if (i != p) tempRow.push_back(matrix[q][i]);//add current int to row of new matrix
+                if (tempRow.size() > 0) tempMatrix.push_back(tempRow); //adds row to new matrix after all values are stored from row
+            }
+            det = det + matrix[0][p] * pow(-1, p) * CalcDet(tempMatrix); //recursive call using recursive formula passing new matrix
+        }
+        return det;
+    }
 }
 
-void Matrix::Inverse_matrix (std::vector<std::vector<double>>* inv_vec){
-	double det = this->CalcDet();
+void Matrix::Inverse_matrix (std::vector<std::vector<int>>* inv_vec){
+	int det = this->CalcDet();
 	if(this->get_num_cols != this->get_num_rows || det == 0 ){
 		std::cout<< "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix"
 		inv_vec.push_back(0);
 		return；
 	}else{
-		std::vector<double> new_row;
+		std::vector<int> new_row;
 		for (int i = 0; i < this->num_rows; i++) {
 			for (int k = 0; k < this->num_cols; k++) {
 				new_row.push_back(this->get_exacl_data(k, i)/det);
