@@ -321,3 +321,16 @@ void Matrix::Inverse_matrix (std::vector<std::vector<double>>* inv_vec){
 		}
 	}
 }
+
+
+
+//Do not delete this !!!!!!!!
+
+
+//Matrix* Matrix::Multiply(Matrix* matrix2){
+	//find the max row and col for both matrix, compare both of them, make sure first matrix col = second matrix row, if not error.
+	//First matrix row will be the new matrix row, second matrix col will be the new col;
+	//set a two for loop, i go through form 0 to maxrow for the first matrix and inside loop, k form 0 to maxcol of the second matrix.
+	//one more loop inside use x form 0 to first matrix col or second matrix row, use excal number form first matrix(i,x) times second matrix (i,k), at the end add all of them together
+	//and then save it on new matrix position i and k.
+//}
