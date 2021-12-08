@@ -63,6 +63,7 @@ public:
 	int get_exacl_data(int inrow, int incol);
 	void Transform_to_vector(std::vector<std::vector<double>>* twod_vec);
 	double CalcDet(std::vector<std::vector<double>>& matrix);
+	void Inverse_matrix (std::vector<std::vector<double>>* inv_vec)
 
 };
 
