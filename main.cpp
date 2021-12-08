@@ -38,10 +38,7 @@ int main() {
 	Matrix* new_matrix = matrix1->subtract(matrix2);
 	Matrix* product = matrix1->multiply(matrix2);
 
-	std::vector<std::vector<double>> vec;
-	matrix1->Transform_to_vector(&vec);
-
-	std::cout << "\n" << matrix1->CalcDet(vec);
+	std::cout << "\n" << Matrix.CalcDet(matrix1->Transform_to_vector());
 
 	new_matrix->write_to_file("matrix_new.txt");
 
