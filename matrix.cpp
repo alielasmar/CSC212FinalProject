@@ -229,30 +229,6 @@ void Matrix::place(int row, int col, int product, Matrix* newMatrix) {
 	newMatrix->push_back(row, col, product);
 }
 
-int Matrix::get_max_col() {
-	int maxcol = 0;
-	Node* curr = this->head;
-	while (curr != nullptr) {
-		if (curr->get_col() > maxcol) {
-			maxcol = curr->get_col();
-		}
-		curr = curr->next;
-	}
-	return maxcol;
-}
-
-int Matrix::get_max_row() {
-	int maxrow = 0;
-	Node* curr = this->head;
-	while (curr != nullptr) {
-		if (curr->get_row() > maxrow) {
-			maxrow = curr->get_row();
-		}
-		curr = curr->next;
-	}
-	return maxrow;
-}
-
 int Matrix::get_exacl_data(int inrow, int incol) {
 	int maxrow = 0;
 	int maxcol = 0;
@@ -278,13 +254,11 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
-	int row = this->get_max_row(); // get maxrow for the matrix
-	int col = this->get_max_col(); // get maxcol for the matrix
+void Matrix::Transform_to_vector(std::vector<std::vector<double>>* twod_vec) {
 	std::vector<double> new_row;
-	for(int i = 0; i <= row; i++){
-		for(int k =0; k<= col; k++){
-			new_row.push_back(this->get_exacl_data(i,k));
+	for (int i = 0; i < this->num_rows; i++) {
+		for (int k = 0; k < this->num_cols; k++) {
+			new_row.push_back(this->get_exacl_data(i, k));
 		}
 		twod_vec->push_back(new_row);
 		new_row.clear();
@@ -293,7 +267,7 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
 
 
 //since the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer
-int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
+double Matrix::CalcDet(std::vector<std::vector<double>>& matrix) {
 	//this function is written in c++ to calculate the determinant of matrix
 	// it's a recursive function that can handle matrix of any dimension
 	int det = 0; // the determinant value will be stored here
@@ -311,10 +285,10 @@ int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
 			//this loop iterate on each elements of the first row in the matrix.
 			//at each element we cancel the row and column it exist in
 			//and form the Cofactor from the rest of the elements in the matrix
-			std::vector<std::vector<int>> Tempmatrix; // to hold the Cofactor;
+			std::vector<std::vector<double>> Tempmatrix; // to hold the Cofactor;
 			for (int i = 1; i < matrix.size(); i++) {
 				// iteration will start from row one cancelling the first row values
-				std::vector<int> TempRow;
+				std::vector<double> TempRow;
 
 				// iteration will pass all cells of the i row excluding the j
 				//value that match p column

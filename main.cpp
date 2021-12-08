@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <vector>
 
 void read_file(Matrix* matrix, std::string filename) {
 	std::ifstream input(filename);
@@ -36,6 +37,11 @@ int main() {
 
 	Matrix* new_matrix = matrix1->add(matrix2);
 	Matrix* product = matrix1->multiply(matrix2);
+
+	std::vector<std::vector<double>> vec;
+	matrix1->Transform_to_vector(&vec);
+
+	std::cout << "\n" << matrix1->CalcDet(vec);
 
 	product->write_to_file("matrix_new.txt");
 

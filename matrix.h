@@ -59,11 +59,9 @@ public:
 	Matrix* subtract(Matrix* matrix2);			// subtacts one matrix from another
 	Matrix* multiply(Matrix* matrix2);			// multiplies two matrices
 
-	int get_max_col();
-	int get_max_row();
 	int get_exacl_data(int inrow, int incol);
-	void Transform_to_vector(std::vector<std::vector<int>>* twod_vec);
-	int CalcDet(std::vector<std::vector<int>> matrix);
+	void Transform_to_vector(std::vector<std::vector<double>>* twod_vec);
+	double CalcDet(std::vector<std::vector<double>>& matrix);
 
 };
 
