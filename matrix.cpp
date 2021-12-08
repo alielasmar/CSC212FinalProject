@@ -278,15 +278,16 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
+void Matrix::Transform_to_vector(std::vector<std::vector<double>> * twod_vec){
 	int row = this->get_max_row(); // get maxrow for the matrix
 	int col = this->get_max_col(); // get maxcol for the matrix
-	std::vector<int> new_row;
-	for (int i = 0; i < row; i++) {
-		for (int k = 0; k < col; k++) {
-			new_row.push_back(this->get_exacl_data(i, k));
+	std::vector<double> new_row;
+	for(int i = 0; i <= row; i++){
+		for(int k =0; k<= col; k++){
+			new_row.push_back(this->get_exacl_data(i,k));
 		}
 		twod_vec->push_back(new_row);
+		new_row.clear();
 	}
 }
 
