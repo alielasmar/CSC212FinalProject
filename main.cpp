@@ -1,5 +1,4 @@
 #include "matrix.h"
-#include "matrix.cpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -36,9 +35,9 @@ int main() {
 	read_file(matrix2, "matrix2.txt");
 
 	Matrix* new_matrix = matrix1->add(matrix2);
+	Matrix* product = matrix1->multiply(matrix2);
 
-
-	new_matrix->write_to_file("matrix_new.txt");
+	product->write_to_file("matrix_new.txt");
 
 	delete matrix1;
 	delete matrix2;
