@@ -255,7 +255,7 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 		}
 		curr = curr->next;
 	}
-	if (maxrow > inrow && maxcol > incol) {
+	if (this->num_rows > inrow && maxcol > incol) {
 		return 0;
 	}
 	else {
@@ -277,14 +277,16 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>>* twod_vec) {
 
 
 //since the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer
-double Matrix::CalcDet(std::vector<std::vector<double>>& matrix) {
+double Matrix::CalcDet() {
+	std::vector<std::vector<double>> matrix;
+	this-Transform_to_vector(&matrix);
 	if (matrix.size() != matrix[0].size()) {
 		std::cout << "The matrix is not square: unable to calculate determinant";
 		return 0;
 	}
 	//this function is written in c++ to calculate the determinant of matrix
 	// it's a recursive function that can handle matrix of any dimension
-	int det = 0; // the determinant value will be stored here
+	double det = 0; // the determinant value will be stored here
 	if (matrix.size() == 1) return matrix[0][0]; // no calculation needed
 	else if (matrix.size() == 2) {
 		//in this case we calculate the determinant of a 2-dimensional matrix in a
@@ -308,7 +310,7 @@ double Matrix::CalcDet(std::vector<std::vector<double>>& matrix) {
 				//value that match p column
 				for (int j = 0; j < matrix[i].size(); j++) {
 					if (j != p) TempRow.push_back(matrix[i][j]);//add current cell to TempRow
-				}
+				}	
 
 				if (TempRow.size() > 0) Tempmatrix.push_back(TempRow);
 				//after adding each row of the new matrix to the vector tempx
@@ -321,5 +323,23 @@ double Matrix::CalcDet(std::vector<std::vector<double>>& matrix) {
 			//we keep doing this until we get our determinant
 		}
 		return det;
+	}
+}
+
+void Matrix::Inverse_matrix (std::vector<std::vector<double>>* inv_vec){
+	if(this->get_num_cols != this->get_num_rows){
+		std::cout<< "Since this is not a square matrix, the inverse of it always 0 vector matrix"
+		inv_vec.push_back(0);
+		return；
+	}else{
+		std::vector<double> new_row;
+		double det = this->CalcDet();
+		for (int i = 0; i < this->num_rows; i++) {
+			for (int k = 0; k < this->num_cols; k++) {
+				new_row.push_back(this->get_exacl_data(k, i)/det);
+			}
+			twod_vec->push_back(new_row);
+			new_row.clear();
+		}
 	}
 }
