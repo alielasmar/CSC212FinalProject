@@ -266,8 +266,8 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 
 void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
 	std::vector<int> new_row;
-	for (int i = 0; i < this->num_rows; i++) {
-		for (int k = 0; k < this->num_cols; k++) {
+	for (int i = 0; i <= this->num_rows; i++) {
+		for (int k = 0; k <= this->num_cols; k++) {
 			new_row.push_back(this->get_exacl_data(i, k));
 		}
 		twod_vec->push_back(new_row);
@@ -303,19 +303,20 @@ int Matrix::CalcDet(vector<vector<int>> matrix) {
     }
 }
 
-void Matrix::Inverse_matrix (std::vector<std::vector<int>>* inv_vec){
-	int det = this->CalcDet();
+void Matrix::Inverse_matrix (std::vector<std::vector<double>>* inv_vec){
+	std::vector<std::vector<int>> tra_vec;
+	int det = this->CalcDet(this->Transform_to_vector(tra_vec));
 	if(this->get_num_cols != this->get_num_rows || det == 0 ){
 		std::cout<< "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix"
 		inv_vec.push_back(0);
 		return；
 	}else{
-		std::vector<int> new_row;
-		for (int i = 0; i < this->num_rows; i++) {
-			for (int k = 0; k < this->num_cols; k++) {
+		std::vector<double> new_row;
+		for (int i = 0; i <= this->num_rows; i++) {
+			for (int k = 0; k <= this->num_cols; k++) {
 				new_row.push_back(this->get_exacl_data(k, i)/det);
 			}
-			twod_vec->push_back(new_row);
+			inv_vec->push_back(new_row);
 			new_row.clear();
 		}
 	}
