@@ -259,7 +259,7 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 		return 0;
 	}
 	else {
-		std::cout << "error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace";
+		std::cout << "error, in " << inrow << "row and " << incol << "col, we can not find a number, please check! for now 0 will replace\n";
 		return 0;
 	}
 }
@@ -278,6 +278,10 @@ void Matrix::Transform_to_vector(std::vector<std::vector<double>>* twod_vec) {
 
 //since the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer
 double Matrix::CalcDet(std::vector<std::vector<double>>& matrix) {
+	if (matrix.size() != matrix[0].size()) {
+		std::cout << "The matrix is not square: unable to calculate determinant";
+		return 0;
+	}
 	//this function is written in c++ to calculate the determinant of matrix
 	// it's a recursive function that can handle matrix of any dimension
 	int det = 0; // the determinant value will be stored here
