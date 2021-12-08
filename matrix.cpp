@@ -279,7 +279,7 @@ void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
  * @Param - 2d matrix of integer values
  * @return - integer value of determinate (the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer)
 */
-int Matrix::CalcDet(vector<vector<int>> matrix) {
+int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
     int det = 0; //the determinant value
     if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
     else if (matrix.size() == 2) {
