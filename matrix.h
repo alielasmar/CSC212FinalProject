@@ -4,7 +4,15 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <cmath>
+#include <cstring>
+#include <limits>
+#include <fstream>
 #include <vector>
+#include <array>
+#include <sstream>
+#include <stdio.h>      /* printf, fgets */
+#include <stdlib.h>
 
 class Node {
 	/*
@@ -15,7 +23,7 @@ class Node {
 	int row;
 	int col;
 	int data;
-	Node* next;	
+	Node* next;
 
 	friend class Matrix;
 
@@ -36,7 +44,7 @@ public:
 
 class Matrix {
 	/*
-	The Matrix class is the linked list itself. It holds information for the number of rows 
+	The Matrix class is the linked list itself. It holds information for the number of rows
 	and columns in the matrix itself as well as the head and tail of the linked list.
 	*/
 	Node* head;
@@ -61,9 +69,9 @@ public:
 	Matrix* multiply(Matrix* matrix2);			// multiplies two matrices
 
 	int get_exacl_data(int inrow, int incol);
-	void Transform_to_vector(std::vector<std::vector<double>>* twod_vec);
-	double CalcDet(std::vector<std::vector<double>>& matrix);
-	void Inverse_matrix (std::vector<std::vector<double>>* inv_vec)
+	std::vector<std::vector<int>> Transform_to_vector();
+	static int CalcDet(std::vector<std::vector<int>> matrix);
+	std::vector<std::vector<double>> Inverse_matrix ();
 
 };
 
