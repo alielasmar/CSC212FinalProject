@@ -264,13 +264,14 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
+std::vector<std::vector<int>> Matrix::Transform_to_vector() {
+	std::vector<std::vector<int>> twod_vec;
 	std::vector<int> new_row;
 	for (int i = 0; i <= this->num_rows; i++) {
 		for (int k = 0; k <= this->num_cols; k++) {
 			new_row.push_back(this->get_exacl_data(i, k));
 		}
-		twod_vec->push_back(new_row);
+		twod_vec.push_back(new_row);
 		new_row.clear();
 	}
 }
@@ -279,7 +280,7 @@ void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
  * @Param - 2d matrix of integer values
  * @return - integer value of determinate (the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer)
 */
-int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
+private static int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
     int det = 0; //the determinant value
     if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
     else if (matrix.size() == 2) {
