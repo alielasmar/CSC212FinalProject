@@ -263,6 +263,9 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 		if (curr->get_col() > maxcol) {
 			maxrow = curr->get_col();
 		}
+		if(maxrow >= inrow && maxcol >= incol){
+			return 0;
+		}
 		curr = curr->next;
 	}
 	if (this->num_rows >= inrow && this->num_cols >= incol) {
