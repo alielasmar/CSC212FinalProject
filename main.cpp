@@ -1,9 +1,9 @@
 #include "matrix.h"
+#include "matrix.cpp"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <vector>
 
 void read_file(Matrix* matrix, std::string filename) {
 	std::ifstream input(filename);
@@ -34,14 +34,37 @@ int main() {
 	std::string filename = "matrix1.txt";
 	read_file(matrix1, filename);
 	read_file(matrix2, "matrix2.txt");
+	std::vector<std::vector<int>> new_vec;
 
-	Matrix* new_matrix = matrix1->subtract(matrix2);
-	Matrix* product = matrix1->multiply(matrix2);
+	new_vec=matrix1->Transform_to_vector();
 
-	std::vector<std::vector<double>> vec;
-	matrix1->Transform_to_vector(&vec);
+	for(int i=0; i<new_vec.size(); i++){
+		for(int x=0; x < new_vec[i].size();x++){
+			std::cout<< new_vec[i][x]<< " "<< " ";
+		}
 
-	std::cout << "\n" << matrix1->CalcDet(vec);
+		std::cout<</*new_vec[i].size() <<*/" "<<std::endl;
+	}
+
+
+	//int x = Matrix::CalcDet(new_vec);
+	//std::cout<< x <<std::endl;
+
+	std::vector<std::vector<double>> inv_vec;
+	inv_vec =matrix1->Inverse_matrix();
+
+	for(int i=0; i<inv_vec.size(); i++){
+		for(int x=0; x < inv_vec[i].size();x++){
+			std::cout<< inv_vec[i][x]<< " "<< " ";
+		}
+
+		std::cout<</*new_vec[i].size() <<*/" "<<std::endl;
+	}
+
+
+
+	Matrix* new_matrix = matrix1->add(matrix2);
+
 
 	new_matrix->write_to_file("matrix_new.txt");
 
