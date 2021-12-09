@@ -61,8 +61,8 @@ public:
 	Matrix* multiply(Matrix* matrix2);			// multiplies two matrices
 
 	int get_exacl_data(int inrow, int incol);
-	void Transform_to_vector(std::vector<std::vector<int>>* twod_vec);
-	int CalcDet(std::vector<std::vector<int>> matrix);
+	std::vector<std::vector<int>> Transform_to_vector();
+	private static int CalcDet(std::vector<std::vector<int>> matrix);
 	void Inverse_matrix (std::vector<std::vector<int>>* inv_vec)
 
 };
