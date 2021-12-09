@@ -52,6 +52,7 @@ class Matrix {
 	int num_rows;
 	int num_cols;
 	void place(int row, int col, int data, Matrix* newMatrix); // helper method which adds data into a certain index of the new matrix
+	void initialize();							// creates blank nodes for all data points
 public:
 	Matrix();
 	Matrix(int num_rows, int num_cols);
@@ -71,7 +72,7 @@ public:
 	int get_exacl_data(int inrow, int incol);
 	std::vector<std::vector<int>> Transform_to_vector();
 	static int CalcDet(std::vector<std::vector<int>> matrix);
-	std::vector<std::vector<double>> Inverse_matrix ();
+	std::vector<std::vector<double>> Inverse_matrix();
 
 };
 

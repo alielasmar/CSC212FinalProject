@@ -165,7 +165,7 @@ Matrix* Matrix::add(Matrix* matrix2) {
 		Node* currNew = newMatrix->get_head();
 		while (currNew != nullptr && currNew->get_next() != nullptr) {
 			if (currNew->get_row() == currNew->get_next()->get_row() && currNew->get_col() == currNew->get_next()->get_col()) {
-				currNew->set_data( currNew->get_data() + currNew->get_next()->get_data() );
+				currNew->set_data(currNew->get_data() + currNew->get_next()->get_data());
 				Node* temp = currNew->get_next();
 				currNew->set_next(currNew->get_next()->get_next());
 				delete temp;
@@ -200,6 +200,8 @@ Matrix* Matrix::multiply(Matrix* matrix2) {
 	Node* curr1 = this->head;
 	Node* curr2 = matrix2->get_head();
 
+	newMatrix->initialize();
+
 	// If sizes match
 	if (this->num_cols == matrix2->get_num_rows()) {
 		// Iterates through the first matrix linked list
@@ -228,15 +230,23 @@ void Matrix::place(int row, int col, int product, Matrix* newMatrix) {
 	Node* curr = newMatrix->get_head();
 	// Iterates through the new matrix
 	while (curr != nullptr) {
-		// If there exists a node corresponding to the given row and col, add the product to the data in that node and return
+		// If there exists a node corresponding to the given row and col, 
+		// add the product to the data in that node and return
 		if (curr->get_row() == row && curr->get_col() == col) {
 			curr->set_data(curr->get_data() + product);
 			return;
 		}
 		curr = curr->get_next();
 	}
-	// If there is not a node found, push back a new one with the row, col, and data specified
-	newMatrix->push_back(row, col, product);
+}
+
+void Matrix::initialize() {
+	for (int i = 0; i < this->num_rows; i++) {
+		for (int j = 0; j < this->num_cols; j++) {
+			// fills an empty linked list with 0
+			this->push_back(i, j, 0);
+		}
+	}
 }
 
 int Matrix::get_exacl_data(int inrow, int incol) {
@@ -281,32 +291,33 @@ std::vector<std::vector<int>> Matrix::Transform_to_vector() {
  * @Param - 2d matrix of integer values
  * @return - integer value of determinate (the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer)
 */
-	int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
+int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
 
-    int det = 0; //the determinant value
-    if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
-    else if (matrix.size() == 2) {
-        det = (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]); //base case - determinant of a 2d matrix
-        return det;
-    } else { //calculate the determinant of squared matrix with order greater than 2
-        //iterate accross first row of cofactors (left to right)
-        for (int p = 0; p < matrix[0].size(); p++) {
-            std::vector<std::vector<int>> tempMatrix; // to hold the new matrix (after columns and rows are removed with respect to cofactor);
-            // iterate through rows not including cofacters (from top to bottom)
-            for (int q = 1; q < matrix.size(); q++) {
-                std::vector<int> tempRow; //creates row for tempMatrix
-                // iterate across rows exluding the current column of cofactor (p) (left to right)
-                for (int i = 0; i < matrix[q].size(); i++)
-                    if (i != p) tempRow.push_back(matrix[q][i]);//add current int to row of new matrix
-                if (tempRow.size() > 0) tempMatrix.push_back(tempRow); //adds row to new matrix after all values are stored from row
-            }
-            det = det + matrix[0][p] * pow(-1, p) * CalcDet(tempMatrix);//recursive call using recursive formula passing new matrix
-        }
-        return det;
-    }
+	int det = 0; //the determinant value
+	if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
+	else if (matrix.size() == 2) {
+		det = (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]); //base case - determinant of a 2d matrix
+		return det;
+	}
+	else { //calculate the determinant of squared matrix with order greater than 2
+	 //iterate accross first row of cofactors (left to right)
+		for (int p = 0; p < matrix[0].size(); p++) {
+			std::vector<std::vector<int>> tempMatrix; // to hold the new matrix (after columns and rows are removed with respect to cofactor);
+			// iterate through rows not including cofacters (from top to bottom)
+			for (int q = 1; q < matrix.size(); q++) {
+				std::vector<int> tempRow; //creates row for tempMatrix
+				// iterate across rows exluding the current column of cofactor (p) (left to right)
+				for (int i = 0; i < matrix[q].size(); i++)
+					if (i != p) tempRow.push_back(matrix[q][i]);//add current int to row of new matrix
+				if (tempRow.size() > 0) tempMatrix.push_back(tempRow); //adds row to new matrix after all values are stored from row
+			}
+			det = det + matrix[0][p] * pow(-1, p) * CalcDet(tempMatrix);//recursive call using recursive formula passing new matrix
+		}
+		return det;
+	}
 }
 
-std::vector<std::vector<double>> Matrix::Inverse_matrix (){
+std::vector<std::vector<double>> Matrix::Inverse_matrix() {
 	std::vector<std::vector<double>> inv_vec;
 	std::vector<std::vector<int>> tra_vec;
 	tra_vec = this->Transform_to_vector();
@@ -316,28 +327,29 @@ std::vector<std::vector<double>> Matrix::Inverse_matrix (){
 	std::vector<double> new_row;
 	double det = CalcDet(tra_vec);
 	double result;
-	if(this->num_cols != this->num_rows || det == 0 ){
-		std::cout<< "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix";
+	if (this->num_cols != this->num_rows || det == 0) {
+		std::cout << "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix";
 		inv_vec.push_back(new_row);
 		return inv_vec;
-	}else{
+	}
+	else {
 		for (int i = 0; i < this->num_rows; i++) {
 			for (int k = 0; k < this->num_cols; k++) {
-				for( int z = 0; z < this->num_rows; z++){
-					for (int y = 0; y< this->num_cols; y++){
-						if(z!=i&&y!=k){
-							oned_det_vec.push_back(get_exacl_data(z,y));
+				for (int z = 0; z < this->num_rows; z++) {
+					for (int y = 0; y < this->num_cols; y++) {
+						if (z != i && y != k) {
+							oned_det_vec.push_back(get_exacl_data(z, y));
 						}
 					}
-					if(oned_det_vec.size() != 0){
+					if (oned_det_vec.size() != 0) {
 						det_vec.push_back(oned_det_vec);
 					}
 					oned_det_vec.clear();
 				}
 				result = CalcDet(det_vec);
-				result = result/det;
-				if((i+k)%2 !=0){
-					result = result*-1;
+				result = result / det;
+				if ((i + k) % 2 != 0) {
+					result = result * -1;
 				}
 				det_vec.clear();
 				new_row.push_back(result);
