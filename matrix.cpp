@@ -15,7 +15,7 @@ Node::Node(int row, int col, int data) {
 }
 
 Node::~Node() {
-	
+
 }
 
 int Node::get_row() {
@@ -139,7 +139,7 @@ Matrix* Matrix::add(Matrix* matrix2) {
 
 	// I will try to explain this algorithm on paper since it is difficult to explain here
 	if (this->num_rows == matrix2->get_num_rows() && this->num_cols == matrix2->get_num_cols()) {
-		while (curr1 != nullptr && curr2 != nullptr) {			
+		while (curr1 != nullptr && curr2 != nullptr) {
 			if (curr1 != nullptr && curr1->pos_bigger(curr2)) {
 				newMatrix->push_back(curr2->get_row(), curr2->get_col(), curr2->get_data());
 				curr2 = curr2->get_next();
@@ -255,7 +255,7 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 		}
 		curr = curr->next;
 	}
-	if (this->num_rows > inrow && maxcol > incol) {
+	if (this->num_rows >= inrow && this->num_cols >= incol) {
 		return 0;
 	}
 	else {
@@ -264,22 +264,25 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 	}
 }
 
-void Matrix::Transform_to_vector(std::vector<std::vector<int>>* twod_vec) {
+std::vector<std::vector<int>> Matrix::Transform_to_vector() {
+	std::vector<std::vector<int>> twod_vec;
 	std::vector<int> new_row;
-	for (int i = 0; i <= this->num_rows; i++) {
-		for (int k = 0; k <= this->num_cols; k++) {
+	for (int i = 0; i < this->num_rows; i++) {
+		for (int k = 0; k < this->num_cols; k++) {
 			new_row.push_back(this->get_exacl_data(i, k));
 		}
-		twod_vec->push_back(new_row);
+		twod_vec.push_back(new_row);
 		new_row.clear();
 	}
+	return twod_vec;
 }
 
 /**Calculates determnant of a matrix of any size
  * @Param - 2d matrix of integer values
  * @return - integer value of determinate (the determinant of a matrix with integer values is a linear combination of integers, it must also be an integer)
 */
-int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
+	int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
+
     int det = 0; //the determinant value
     if (matrix.size() == 1) return matrix[0][0]; //1X1 determinate doesn't need calculated
     else if (matrix.size() == 2) {
@@ -288,38 +291,69 @@ int Matrix::CalcDet(std::vector<std::vector<int>> matrix) {
     } else { //calculate the determinant of squared matrix with order greater than 2
         //iterate accross first row of cofactors (left to right)
         for (int p = 0; p < matrix[0].size(); p++) {
-            vector<vector<int>> tempMatrix; // to hold the new matrix (after columns and rows are removed with respect to cofactor);
+            std::vector<std::vector<int>> tempMatrix; // to hold the new matrix (after columns and rows are removed with respect to cofactor);
             // iterate through rows not including cofacters (from top to bottom)
             for (int q = 1; q < matrix.size(); q++) {
-                vector<int> tempRow; //creates row for tempMatrix
+                std::vector<int> tempRow; //creates row for tempMatrix
                 // iterate across rows exluding the current column of cofactor (p) (left to right)
                 for (int i = 0; i < matrix[q].size(); i++)
                     if (i != p) tempRow.push_back(matrix[q][i]);//add current int to row of new matrix
                 if (tempRow.size() > 0) tempMatrix.push_back(tempRow); //adds row to new matrix after all values are stored from row
             }
-            det = det + matrix[0][p] * pow(-1, p) * CalcDet(tempMatrix); //recursive call using recursive formula passing new matrix
+            det = det + matrix[0][p] * pow(-1, p) * CalcDet(tempMatrix);//recursive call using recursive formula passing new matrix
         }
         return det;
     }
 }
 
-void Matrix::Inverse_matrix (std::vector<std::vector<double>>* inv_vec){
+std::vector<std::vector<double>> Matrix::Inverse_matrix (){
+	std::vector<std::vector<double>> inv_vec;
 	std::vector<std::vector<int>> tra_vec;
-	int det = this->CalcDet(this->Transform_to_vector(tra_vec));
-	if(this->get_num_cols != this->get_num_rows || det == 0 ){
-		std::cout<< "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix"
-		inv_vec.push_back(0);
-		return；
+	tra_vec = this->Transform_to_vector();
+	std::vector<std::vector<double>> tpos_vec;
+	std::vector<std::vector<int>> det_vec;
+	std::vector<int> oned_det_vec;
+	std::vector<double> new_row;
+	double det = CalcDet(tra_vec);
+	double result;
+	if(this->num_cols != this->num_rows || det == 0 ){
+		std::cout<< "Since this is not a square matrix or det of your matrix is 0, the inverse of it always 0 vector matrix";
+		inv_vec.push_back(new_row);
+		return inv_vec;
 	}else{
-		std::vector<double> new_row;
-		for (int i = 0; i <= this->num_rows; i++) {
-			for (int k = 0; k <= this->num_cols; k++) {
-				new_row.push_back(this->get_exacl_data(k, i)/det);
+		for (int i = 0; i < this->num_rows; i++) {
+			for (int k = 0; k < this->num_cols; k++) {
+				for( int z = 0; z < this->num_rows; z++){
+					for (int y = 0; y< this->num_cols; y++){
+						if(z!=i&&y!=k){
+							oned_det_vec.push_back(get_exacl_data(z,y));
+						}
+					}
+					if(oned_det_vec.size() != 0){
+						det_vec.push_back(oned_det_vec);
+					}
+					oned_det_vec.clear();
+				}
+				result = CalcDet(det_vec);
+				result = result/det;
+				if((i+k)%2 !=0){
+					result = result*-1;
+				}
+				det_vec.clear();
+				new_row.push_back(result);
 			}
-			inv_vec->push_back(new_row);
+			inv_vec.push_back(new_row);
+			new_row.clear();
+		}
+		for (int i = 0; i < this->num_rows; i++) {
+			for (int k = 0; k < this->num_cols; k++) {
+				new_row.push_back(inv_vec[k][i]);
+			}
+			tpos_vec.push_back(new_row);
 			new_row.clear();
 		}
 	}
+	return tpos_vec;
 }
 
 
