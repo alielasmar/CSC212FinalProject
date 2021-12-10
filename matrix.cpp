@@ -230,7 +230,7 @@ void Matrix::place(int row, int col, int product, Matrix* newMatrix) {
 	Node* curr = newMatrix->get_head();
 	// Iterates through the new matrix
 	while (curr != nullptr) {
-		// If there exists a node corresponding to the given row and col, 
+		// If there exists a node corresponding to the given row and col,
 		// add the product to the data in that node and return
 		if (curr->get_row() == row && curr->get_col() == col) {
 			curr->set_data(curr->get_data() + product);
@@ -263,7 +263,7 @@ int Matrix::get_exacl_data(int inrow, int incol) {
 		if (curr->get_col() > maxcol) {
 			maxrow = curr->get_col();
 		}
-		if(maxrow >= inrow && maxcol >= incol){
+		if(maxrow > inrow && maxcol > incol){
 			return 0;
 		}
 		curr = curr->next;
@@ -351,7 +351,7 @@ std::vector<std::vector<double>> Matrix::Inverse_matrix() {
 				}
 				result = CalcDet(det_vec);
 				result = result / det;
-				if ((i + k) % 2 != 0) {
+				if ((i + k) % 2 != 0 && result != 0) {
 					result = result * -1;
 				}
 				det_vec.clear();
