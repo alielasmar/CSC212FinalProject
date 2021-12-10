@@ -13,3 +13,6 @@ g++ main.cpp matrix.cpp
 ./a.out add output.txt add1.txt add2.txt
 
 ./a.out inverse output.txt inverse.txt
+
+
+Some sample files are included in the repository
