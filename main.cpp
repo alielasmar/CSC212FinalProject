@@ -1,5 +1,4 @@
 #include "matrix.h"
-#include "matrix.cpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -28,47 +27,54 @@ void read_file(Matrix* matrix, std::string filename) {
 	input.close();
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	std::string operation = argv[1];
+	std::string outfile = argv[2];
+	std::string file1 = argv[3];
+	std::string file2;
+	if (argc > 4) {
+		file2 = argv[4];
+	}
+		
 	Matrix* matrix1 = new Matrix();
 	Matrix* matrix2 = new Matrix();
-	std::string filename = "matrix1.txt";
-	read_file(matrix1, filename);
-	read_file(matrix2, "matrix2.txt");
-	std::vector<std::vector<int>> new_vec;
+	Matrix* new_matrix;
 
-	new_vec=matrix1->Transform_to_vector();
-
-	for(int i=0; i<new_vec.size(); i++){
-		for(int x=0; x < new_vec[i].size();x++){
-			std::cout<< new_vec[i][x]<< " "<< " ";
-		}
-
-		std::cout<</*new_vec[i].size() <<*/" "<<std::endl;
+	read_file(matrix1, file1);
+	if (operation != "determinant" && operation != "inverse") {
+		read_file(matrix2, file2);
 	}
 
-
-	//int x = Matrix::CalcDet(new_vec);
-	//std::cout<< x <<std::endl;
-
-	std::vector<std::vector<double>> inv_vec;
-	inv_vec =matrix1->Inverse_matrix();
-
-	for(int i=0; i<inv_vec.size(); i++){
-		for(int x=0; x < inv_vec[i].size();x++){
-			std::cout<< inv_vec[i][x]<< " "<< " ";
-		}
-
-		std::cout<</*new_vec[i].size() <<*/" "<<std::endl;
+	if (operation == "add") {
+		new_matrix = matrix1->add(matrix2);
+		new_matrix->write_to_file(outfile);
+		delete new_matrix;
 	}
-
-
-
-	Matrix* new_matrix = matrix1->add(matrix2);
-
-
-	new_matrix->write_to_file("matrix_new.txt");
+	else if (operation == "subtract") {
+		new_matrix = matrix1->subtract(matrix2);
+		new_matrix->write_to_file(outfile);
+		delete new_matrix;
+	}
+	else if (operation == "multiply") {
+		new_matrix = matrix1->multiply(matrix2);
+		new_matrix->write_to_file(outfile);
+		delete new_matrix;
+	}
+	else if (operation == "determinant") {
+		std::cout << Matrix::CalcDet(matrix1->Transform_to_vector());
+	}
+	else if (operation == "inverse") {
+		std::vector<std::vector<double>> new_vec = matrix1->Inverse_matrix();
+		std::ofstream output(outfile);
+		for (int i = 0; i < new_vec.size(); i++) {
+			for (int j = 0; j < new_vec[0].size(); j++) {
+				output << new_vec[i][j] << " ";
+			}
+			output << "\n";
+		}
+		output.close();
+	}
 
 	delete matrix1;
 	delete matrix2;
-	delete new_matrix;
 }
