@@ -23,15 +23,15 @@ Instructions to use GUI
 
 Computer Requirements : Currently our GUI can only be run using the QT framework
 
-In your terminal you must type in 'chmod -R 755' then drag the application into the terminal and place it after what you have just typed
-
-Upon opening the application you must select an operator and 2 files using their designated file, not doing so will cause errors and you will be prompted to do so
+Upon opening the application you must select an operator and 3 files before pressing the 'get new matrix' button, not doing so will cause errors and you will be prompted to do so
 
 When using the file buttons you will be brought to your file manager where you will be prompted to select a file
 
 You will only be able to select .txt files, the file manager will not allow the selection of anoy other types of files
 
 When using the 'inverse' or 'determinant' opertors 
+
+When selecting the source file please select 'new_matrix.txt' as not doing so will not allow the program to wotk properly
 
 The "+" operator will add the matrices together and print the result on the screen via the text box
 
