@@ -21,7 +21,7 @@ Some sample files are included in the repository
 
 Instructions to use GUI
 
-Computer Requirements : Unfortunantly our GUI only supports Mac OS 12.00+ 
+Computer Requirements : Currently our GUI can only be run using the QT framework
 
 In your terminal you must type in 'chmod -R 755' then drag the application into the terminal and place it after what you have just typed
 
