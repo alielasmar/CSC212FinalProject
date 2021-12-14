@@ -23,7 +23,7 @@ Instructions to use GUI
 
 Computer Requirements : Unfortunantly our GUI only supports Mac OS 12.00+ 
 
-In your terminal you must type in 'chmod 755 -R 755' then drag the application into the terminal and place it after what you have just typed
+In your terminal you must type in 'chmod -R 755' then drag the application into the terminal and place it after what you have just typed
 
 Upon opening the application you must select an operator and 2 files using their designated file, not doing so will cause errors and you will be prompted to do so
 
