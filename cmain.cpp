@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 		std::cout << Matrix::CalcDet(matrix1->Transform_to_vector());
 	}
 	else if (operation == "inverse") {
-		std::vector<std::vector<double>> new_vec = matrix1->Inverse_matrix();
+		std::vector<std::vector<double> > new_vec = matrix1->Inverse_matrix();
 		std::ofstream output(outfile);
 		for (int i = 0; i < new_vec.size(); i++) {
 			for (int j = 0; j < new_vec[0].size(); j++) {

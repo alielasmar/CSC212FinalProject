@@ -70,9 +70,9 @@ public:
 	Matrix* multiply(Matrix* matrix2);			// multiplies two matrices
 
 	int get_exacl_data(int inrow, int incol);
-	std::vector<std::vector<int>> Transform_to_vector();
-	static int CalcDet(std::vector<std::vector<int>> matrix);
-	std::vector<std::vector<double>> Inverse_matrix();
+	std::vector<std::vector<int> > Transform_to_vector();
+	static int CalcDet(std::vector<std::vector<int> > matrix);
+	std::vector<std::vector<double> > Inverse_matrix();
 
 };
 
