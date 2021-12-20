@@ -10,6 +10,7 @@ Possible operations: add, subtract, multiply, determinant, inverse
 Example:
 
 g++ cmain.cpp cmatrix.cpp
+
 ./a.out add output.txt add1.txt add2.txt
 
 ./a.out inverse output.txt inverse.txt
